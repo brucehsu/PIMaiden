@@ -307,7 +307,7 @@ void FtpClient::deleteFile() {
         currentId = ftpConnection->currentId();
     } else if(this->remote==2) {
         this->disableBtns();
-        //QFile *tmp = new QFile(this->currentFile);
+        QFile::remove(this->currentFile);
         this->enableBtns();
         this->refreshLocalDir();
         this->currentFile = "";
