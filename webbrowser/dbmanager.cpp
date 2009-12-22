@@ -42,5 +42,12 @@ QList<QStringList*>* DbManager::searchKeyword(QString text) {
 
 bool DbManager::insertUrl(QString url, QString title) {
     QSqlQuery query;
-    bool x = query.exec("INSERT INTO history(url,title) VALUES (\'" + url + "\', \'" + title + "\')");
+    query.exec("SELECT * FROM history WHERE url=\'" + url + "\'");
+    if(query.next()) {
+        //Update title field in table.
+        query.exec("UPDATE history SET title=\'" + title + "\' WHERE url=\'" + url + "\'");
+    } else {
+        //Insert new record to table.
+        query.exec("INSERT INTO history(url,title) VALUES (\'" + url + "\', \'" + title + "\')");
+    }
 }
