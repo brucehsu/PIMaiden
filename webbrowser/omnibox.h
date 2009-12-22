@@ -16,6 +16,7 @@ class OmniBox : public QLineEdit
 
 public:
     OmniBox();
+    ~OmniBox();
     void setWebView(QWebView *view);
 
 private:

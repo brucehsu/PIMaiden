@@ -10,6 +10,7 @@ class DbManager : public QObject
 
 public:
     DbManager();
+    ~DbManager();
     QList<QStringList*>* searchKeyword(QString text);
     bool insertUrl(QString url, QString title);
 

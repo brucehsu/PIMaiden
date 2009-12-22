@@ -13,6 +13,10 @@ OmniBox::OmniBox()
     QObject::connect(this,SIGNAL(editingFinished()),this,SLOT(setBackUrl()));
 }
 
+OmniBox::~OmniBox() {
+    delete dbManager;
+}
+
 void OmniBox::keyPressEvent(QKeyEvent *event) {
     if(event->key()==Qt::Key_Enter || event->key()==Qt::Key_Return) {
         if(list->currentRow()>=0) {

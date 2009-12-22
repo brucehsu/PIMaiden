@@ -14,14 +14,16 @@ DbManager::DbManager()
     }*/
     if (!db.open()) {
             QMessageBox::critical(0, tr("Cannot open database"),
-                tr("Unable to establish a database connection.\n"
-                   "This example needs SQLite support. Please read "
-                   "the Qt SQL driver documentation for information how "
-                   "to build it."), QMessageBox::Cancel);
+                tr("Unable to establish a database connection."), QMessageBox::Cancel);
             return;
     }
     QSqlQuery query;
     query.exec("CREATE TABLE history(id INTEGER PRIMARY KEY ASC, url UNIQUE, title, datetime)");
+
+}
+
+DbManager::~DbManager() {
+    db.removeDatabase("history.db");
 }
 
 QList<QStringList*>* DbManager::searchKeyword(QString text) {

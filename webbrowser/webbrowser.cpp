@@ -71,7 +71,7 @@ WebBrowser::WebBrowser()
 
 WebBrowser::~WebBrowser()
 {
-
+    delete omnibox;
 }
 
 void WebBrowser::setWebUrl() {
