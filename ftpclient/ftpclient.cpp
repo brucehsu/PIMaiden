@@ -12,6 +12,9 @@ FtpClient::FtpClient(QWidget *parent)
     downloadBtn = new QPushButton();
     deleteBtn = new QPushButton();
 
+    localDirEdit = new QLineEdit();
+    remoteDirEdit = new QLineEdit();
+
     transferProgressBar = new QProgressBar();
 
     msg = new QTextEdit();
@@ -45,7 +48,9 @@ FtpClient::FtpClient(QWidget *parent)
     remoteFileView->setHeaderLabels(header);
     remoteFileView->header()->setClickable(true);
 
-    layout->addWidget(localFileView,0,0,7,3);
+    layout->addWidget(localDirEdit,0,0,1,3);
+    //layout->addWidget(remoteDirEdit,0,4,1,3);
+    layout->addWidget(localFileView,1,0,6,3);
     layout->addWidget(remoteFileView,0,4,7,3);
     layout->addWidget(uploadBtn,2,3,1,1);
     layout->addWidget(downloadBtn,3,3,1,1);
@@ -66,16 +71,18 @@ FtpClient::FtpClient(QWidget *parent)
     QObject::connect(remoteFileView,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(sortByHeader(QTreeWidgetItem,int)));
     QObject::connect(remoteFileView,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(setCurrentFile(QTreeWidgetItem*,int)));
     QObject::connect(remoteFileView,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT(switchToRemoteDir(QTreeWidgetItem*,int)));
+    QObject::connect(localDirEdit,SIGNAL(returnPressed()),this,SLOT(switchToLocalDir()));
     QObject::connect(uploadBtn,SIGNAL(clicked()),this,SLOT(uploadFile()));
     QObject::connect(downloadBtn,SIGNAL(clicked()),this,SLOT(downloadFile()));
     QObject::connect(deleteBtn,SIGNAL(clicked()),this,SLOT(deleteFile()));
 
 
-    this->siteUrl = "csie0.cs.ccu.edu.tw";
-    this->showSite(siteUrl,"thisisusername","thisispasswd");
+    this->siteUrl = "host";
+    this->showSite(siteUrl,"username","password");
     this->remote = 0;
 
     localDir.root();
+    localDirEdit->setText(localDir.absolutePath());
     refreshLocalDir();
     this->setLayout(layout);
     this->resize(800,600);
@@ -234,6 +241,17 @@ void FtpClient::switchToRemoteDir(QTreeWidgetItem * item, int column) {
 void FtpClient::switchToLocalDir(QTreeWidgetItem * item, int column) {
     if(item->text(1)!="") return;
     localDir.cd(item->text(0));
+    localDirEdit->setText(localDir.absolutePath());
+    this->refreshLocalDir();
+}
+
+void FtpClient::switchToLocalDir() {
+    QString path = localDirEdit->text();
+    if(QFile::exists(path)) {
+        localDir.setPath(path);
+    } else {
+        localDirEdit->setText(localDir.absolutePath());
+    }
     this->refreshLocalDir();
 }
 

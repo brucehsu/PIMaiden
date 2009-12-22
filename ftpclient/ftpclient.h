@@ -56,6 +56,7 @@ public slots:
     void sortByHeader(QTreeWidgetItem*, int);
     void switchToRemoteDir(QTreeWidgetItem*, int);
     void switchToLocalDir(QTreeWidgetItem*, int);
+    void switchToLocalDir();
     void uploadFile();
     void downloadFile();
     void setCurrentFile(QTreeWidgetItem*, int);
