@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>close.gif</file>
+        <file>prev.gif</file>
+        <file>next.gif</file>
+        <file>refresh.gif</file>
+        <file>shorten.png</file>
+    </qresource>
+</RCC>
