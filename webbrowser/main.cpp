@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[])
 {
+    qApp->addLibraryPath("plugins/");
     QApplication a(argc, argv);
     WebBrowser w;
     w.show();
